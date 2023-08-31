@@ -1,0 +1,8 @@
+[{
+  "mainTitle": "Search Experience",
+  "items": ["Search"]
+},{
+  "mainTitle": "Search Configuration",
+  "items": ["Configuration",
+    "Search API"]
+}]
