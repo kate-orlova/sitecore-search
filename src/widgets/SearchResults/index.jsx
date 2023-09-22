@@ -47,7 +47,7 @@ export const SearchResults = ({
       onFacetClick,
       onClearFilters,
     },
-    context: { page = defaultPage, itemsPerPage = defaultProductsPerPage },
+    context: { sortType = defaultSortType, page = defaultPage, itemsPerPage = defaultProductsPerPage },
     queryResult: {
       isLoading,
       isFetching,
@@ -61,6 +61,7 @@ export const SearchResults = ({
       .setSearchQueryHighlightPreTag(HIGHLIGHT_DATA.pre)
       .setSearchQueryHighlightPostTag(HIGHLIGHT_DATA.post);
     return {
+      sortType,
       page,
       itemsPerPage,
       keyphrase: defaultKeyphrase,
