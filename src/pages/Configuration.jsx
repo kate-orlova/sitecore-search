@@ -22,6 +22,13 @@ const Configuration = () => {
 
 <h2>How to configure a Source?</h2>
 <p>To create and manage Sources go to the Sources section in the Customer Engagement Console (CEC). While configuring a new Source you have to specify the following settings:</p>
+<ul>
+<li>SOURCE NAME - enter a name for the source, for example, “Product data push over API”.</li>
+<li>DESCRIPTION - enter a few lines to describe the source you want to configure, for instance, “Push the product catalogue from an external API”.</li>
+<li>CONNECTOR - select the most relevant type of source from the available options:</li>
+</ul>
+
+
 
 <h3>How to push your custom data to the Sitecore Search over API?</h3>
 <p>TBC</p>
