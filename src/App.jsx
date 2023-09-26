@@ -15,6 +15,7 @@ import Home from './pages/Home.jsx';
 import Configuration from './pages/Configuration.jsx';
 import API from './pages/SearchAPI.jsx';
 import Search from './pages/Search.jsx';
+import LocationSearch from './pages/LocationSearch.jsx';
 import { GlobalStyle } from './styled.js';
 import darkTheme from './themes/dark.json';
 import lightTheme from './themes/light.json';
@@ -69,6 +70,7 @@ function App() {
                 <Routes>
                   <Route path="/" element={<Home />} />
                   <Route path="/search" element={<Search />} />
+                  <Route path="/location-search" element={<LocationSearch />} />
                   <Route path="/detail/:id" element={<ArticleDetail />}></Route>
 				  <Route path="/configuration" element={<Configuration />} />
 				  <Route path="/search api" element={<API />} />
