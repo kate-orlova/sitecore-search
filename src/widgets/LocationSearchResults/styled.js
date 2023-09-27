@@ -188,6 +188,7 @@ const SortSelectTriggerStyled = styled(SortSelect.Trigger)`
 
 const GenericSelectTriggerStyled = styled(Select.Trigger)`
   margin-left: ${theme.vars.spacing.m};
+  margin-right: ${theme.vars.spacing.m};
   ${selectTriggerStyle}
 `;
 

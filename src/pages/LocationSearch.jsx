@@ -13,21 +13,13 @@ const LocationSearchPageSection = styled(PageSection)`
   padding-top: 40px;
 `;
 
-const SearchPageTitle = styled.h2`
-  color: ${theme.vars.palette.primary.contrastText};
-  font-size: ${theme.vars.typography.fontSize6.fontSize};
-  width: 100%;
-  text-align: left;
-`;
-
 const LocationSearch = () => {
   const [searchParams] = useSearchParams();
   const query = searchParams.get('q') || '';
 
   return (
     <LocationSearchPageSection>
-      <div>
-        <SearchPageTitle>{`Showing results for "${query}"`}</SearchPageTitle>
+      <div>        
         <LocationSearchResults key={`${query}-search`} rfkId="location_search"  />
       </div>
     </LocationSearchPageSection>

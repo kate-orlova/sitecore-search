@@ -6,11 +6,17 @@ import { Presence } from '@radix-ui/react-presence';
 import { FilterGeo, WidgetDataType, useSearchResults, useSearchResultsSelectedFacets, widget } from '@sitecore-search/react';
 import { AccordionFacets, CardViewSwitcher, Pagination } from '@sitecore-search/ui';
 
+import styled from 'styled-components';
+import { theme } from '@sitecore-search/ui';
+
 import { LanguageContext } from '../../contexts/languageContext';
 import { DEFAULT_IMAGE, HIGHLIGHT_DATA } from '../../data/constants';
 import useSortingOptions from '../../hooks/useSortingOptions';
 import { HighlightComponent, getDescription } from '../utils';
 import { CustomFilterGeo } from '../customFilterGeo';
+import distances from '../../data/distances.js';
+import locations from '../../data/locations.js';
+
 import {
   AccordionFacetsStyled,
   ArticleCardRowStyled,
@@ -29,6 +35,13 @@ import {
   SortSelectStyled,
 } from './styled';
 import PropTypes from 'prop-types';
+
+const SearchPageTitle = styled.div`
+  color: ${theme.vars.palette.primary.contrastText};
+  font-size: ${theme.vars.typography.fontSize6.fontSize};
+  width: 100%;
+  text-align: left;
+`;
 
 export const LocationSearchResults = ({
   defaultSortType = 'featured_desc',
@@ -57,7 +70,7 @@ export const LocationSearchResults = ({
   } = useSearchResults((query) => {
     query
       .getRequest()
-	  .setSearchFilter( new CustomFilterGeo('location', '250mi', 51.5023187,-3.2874498) )
+	  .setSearchFilter( new CustomFilterGeo('location', '200mi', 51.5023187,-3.2874498) )
       .setSearchQueryHighlightFragmentSize(500)
       .setSearchQueryHighlightFields(['subtitle', 'description'])
       .setSearchQueryHighlightPreTag(HIGHLIGHT_DATA.pre)
@@ -95,6 +108,39 @@ export const LocationSearchResults = ({
       )}
       {!isLoading && (
         <>
+		  <SearchPageTitle>{`Showing results for `}
+			<SelectStyled.Root defaultValue="Cardiff" onValueChange={onSortChange}>
+				<SelectStyled.Trigger>
+				  <SelectStyled.SelectValue>Cardiff</SelectStyled.SelectValue>
+				  <SelectStyled.Icon />
+				</SelectStyled.Trigger>
+				<SelectStyled.Content>
+				  <SelectStyled.Viewport>
+					  {locations.map((option) => (
+					  <SelectStyled.Option value={option} key={`${option.value}`}>
+						<SelectStyled.OptionText>{option.label}</SelectStyled.OptionText>
+					  </SelectStyled.Option>
+					  ))}
+				  </SelectStyled.Viewport>
+				</SelectStyled.Content>
+			  </SelectStyled.Root>
+			  {` in `}
+			  <SelectStyled.Root defaultValue="10 miles" onValueChange={onSortChange}>
+				<SelectStyled.Trigger>
+				  <SelectStyled.SelectValue>10 miles</SelectStyled.SelectValue>
+				  <SelectStyled.Icon />
+				</SelectStyled.Trigger>
+				<SelectStyled.Content>
+				  <SelectStyled.Viewport>
+					{distances.map((option) => (
+					  <SelectStyled.Option value={option} key={`${option.value}`}>
+						<SelectStyled.OptionText>{option.label}</SelectStyled.OptionText>
+					  </SelectStyled.Option>
+					))}
+				  </SelectStyled.Viewport>
+				</SelectStyled.Content>
+			  </SelectStyled.Root>
+		  </SearchPageTitle>
           <SearchResultsLayout.MainArea>
             {isFetching && (
               <LoaderContainer>
