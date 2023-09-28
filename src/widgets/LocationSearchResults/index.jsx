@@ -47,6 +47,7 @@ export const LocationSearchResults = ({
   defaultPage = 1,
   defaultKeyphrase = '',
   defaultProductsPerPage = 24,
+  defaultDistance = { value: '10mi', label: '10 miles' }
 }) => {
   const { language } = useContext(LanguageContext);
   const navigate = useNavigate();
@@ -58,7 +59,7 @@ export const LocationSearchResults = ({
       onFilterClick,
       onSortChange,
       onFacetClick,
-      onClearFilters,
+      onClearFilters
     },
     context: { sortType = defaultSortType, page = defaultPage, itemsPerPage = defaultProductsPerPage },
     queryResult: {
@@ -66,6 +67,11 @@ export const LocationSearchResults = ({
       isFetching,
       data: {total_item: totalItems = 0, facet: facets = [], content: articles = [] } = {},
     },
+	query: query,
+	onDistanceChange = (distanceOption) => {
+	  setDistance(distanceOption);
+	  query.getRequest().setSearchFilter(new FilterGeo('location', distanceOption.value, 51.5023187,-3.2874498));
+  }
   } = useSearchResults((query) => {
     query
       .getRequest()
@@ -85,6 +91,7 @@ export const LocationSearchResults = ({
   const selectedFacetsFromApi = useSearchResultsSelectedFacets();
   const defaultCardView = CardViewSwitcher.CARD_VIEW_LIST;
   const [dir, setDir] = useState(defaultCardView);
+  const [distance, setDistance] = useState(defaultDistance);
   const onToggle = (value = defaultCardView) => setDir(value);
   const { sortChoices, currentOption } = useSortingOptions();
 
@@ -124,9 +131,9 @@ export const LocationSearchResults = ({
 				</SelectStyled.Content>
 			  </SelectStyled.Root>
 			  {` in `}
-			  <SelectStyled.Root defaultValue="10 miles" onValueChange={onSortChange}>
+			  <SelectStyled.Root defaultValue={defaultDistance} onValueChange={onDistanceChange}>
 				<SelectStyled.Trigger>
-				  <SelectStyled.SelectValue>10 miles</SelectStyled.SelectValue>
+				  <SelectStyled.SelectValue>{distance.label}</SelectStyled.SelectValue>
 				  <SelectStyled.Icon />
 				</SelectStyled.Trigger>
 				<SelectStyled.Content>
