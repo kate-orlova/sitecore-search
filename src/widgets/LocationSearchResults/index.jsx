@@ -13,7 +13,6 @@ import { LanguageContext } from '../../contexts/languageContext';
 import { DEFAULT_IMAGE, HIGHLIGHT_DATA } from '../../data/constants';
 import useSortingOptions from '../../hooks/useSortingOptions';
 import { HighlightComponent, getDescription } from '../utils';
-import { CustomFilterGeo } from '../customFilterGeo';
 import distances from '../../data/distances.js';
 import locations from '../../data/locations.js';
 
@@ -70,7 +69,7 @@ export const LocationSearchResults = ({
   } = useSearchResults((query) => {
     query
       .getRequest()
-	  .setSearchFilter( new CustomFilterGeo('location', '200mi', 51.5023187,-3.2874498) )
+	  .setSearchFilter( new FilterGeo('location', defaultDistance.value, 51.5023187,-3.2874498) )
       .setSearchQueryHighlightFragmentSize(500)
       .setSearchQueryHighlightFields(['subtitle', 'description'])
       .setSearchQueryHighlightPreTag(HIGHLIGHT_DATA.pre)
