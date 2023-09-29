@@ -46,13 +46,14 @@ export const LocationSearchResults = ({
   defaultSortType = 'featured_desc',
   defaultPage = 1,
   defaultKeyphrase = '',
-  defaultProductsPerPage = 24,
+  defaultItemsPerPage = 24,
   defaultDistance = { value: '10mi', label: '10 miles' },
   defaultLocation = { lat: 51.5023187, lon: -3.2874498, label: 'Cardiff' }
 }) => {
   const { language } = useContext(LanguageContext);
   const navigate = useNavigate();
   const {
+	widgetRef,
     actions: {
       onResultsPerPageChange,
       onPageNumberChange,
@@ -62,7 +63,7 @@ export const LocationSearchResults = ({
       onFacetClick,
       onClearFilters
     },
-    context: { sortType = defaultSortType, page = defaultPage, itemsPerPage = defaultProductsPerPage },
+    state: { page, itemsPerPage },
     queryResult: {
       isLoading,
       isFetching,
@@ -77,20 +78,22 @@ export const LocationSearchResults = ({
 	  setLocation(locationOption);
 	  query.getRequest().setSearchFilter(new FilterGeo('location', distance.value, locationOption.lat, locationOption.lon));
     }
-  } = useSearchResults((query) => {
-    query
-      .getRequest()
-	  .setSearchFilter( new FilterGeo('location', defaultDistance.value, defaultLocation.lat, defaultLocation.lon) )
-      .setSearchQueryHighlightFragmentSize(500)
-      .setSearchQueryHighlightFields(['subtitle', 'description'])
-      .setSearchQueryHighlightPreTag(HIGHLIGHT_DATA.pre)
-      .setSearchQueryHighlightPostTag(HIGHLIGHT_DATA.post);
-    return {
-      sortType,
-      page,
-      itemsPerPage,
-      keyphrase: defaultKeyphrase,
-    };
+  } = useSearchResults({
+      query: (query) => {	  
+        query
+          .getRequest()
+          .setSearchFilter( new FilterGeo('location', defaultDistance.value, defaultLocation.lat, defaultLocation.lon) )
+          .setSearchQueryHighlightFragmentSize(500)
+          .setSearchQueryHighlightFields(['subtitle', 'description'])
+          .setSearchQueryHighlightPreTag(HIGHLIGHT_DATA.pre)
+          .setSearchQueryHighlightPostTag(HIGHLIGHT_DATA.post);
+      },
+      state: {
+          sortType: defaultSortType,
+          page: defaultPage,
+          itemsPerPage: defaultItemsPerPage,
+          keyphrase: defaultKeyphrase,
+      },
   });
   const totalPages = Math.ceil(totalItems / (itemsPerPage !== 0 ? itemsPerPage : 1));
   const selectedFacetsFromApi = useSearchResultsSelectedFacets();
@@ -153,7 +156,7 @@ export const LocationSearchResults = ({
 				</SelectStyled.Content>
 			  </SelectStyled.Root>
 		  </SearchPageTitle>
-          <SearchResultsLayout.MainArea>
+          <SearchResultsLayout.MainArea ref={widgetRef}>
             {isFetching && (
               <LoaderContainer>
                 <Presence present={true}>
@@ -336,7 +339,7 @@ export const LocationSearchResults = ({
                 <div>
                   <label>Results Per Page</label>
                   <SelectStyled.Root
-                    defaultValue={String(defaultProductsPerPage)}
+                    defaultValue={String(defaultItemsPerPage)}
                     onValueChange={(v) => onResultsPerPageChange({ numItems: Number(v) })}
                   >
                     <SelectStyled.Trigger>
@@ -403,7 +406,7 @@ export const LocationSearchResults = ({
 LocationSearchResults.propTypes = {
   defaultSortType: PropTypes.string,
   defaultPage: PropTypes.number,
-  defaultProductsPerPage: PropTypes.number,
+  defaultItemsPerPage: PropTypes.number,
   defaultKeyphrase: PropTypes.string,
 };
 
