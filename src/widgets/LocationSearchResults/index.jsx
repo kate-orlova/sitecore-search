@@ -47,7 +47,8 @@ export const LocationSearchResults = ({
   defaultPage = 1,
   defaultKeyphrase = '',
   defaultProductsPerPage = 24,
-  defaultDistance = { value: '10mi', label: '10 miles' }
+  defaultDistance = { value: '10mi', label: '10 miles' },
+  defaultLocation = { lat: 51.5023187, lon: -3.2874498, label: 'Cardiff' }
 }) => {
   const { language } = useContext(LanguageContext);
   const navigate = useNavigate();
@@ -70,12 +71,16 @@ export const LocationSearchResults = ({
 	query: query,
 	onDistanceChange = (distanceOption) => {
 	  setDistance(distanceOption);
-	  query.getRequest().setSearchFilter(new FilterGeo('location', distanceOption.value, 51.5023187,-3.2874498));
-  }
+	  query.getRequest().setSearchFilter(new FilterGeo('location', distanceOption.value, location.lat, location.lon));
+    },
+	onLocationChange = (locationOption) => {
+	  setLocation(locationOption);
+	  query.getRequest().setSearchFilter(new FilterGeo('location', distance.value, locationOption.lat, locationOption.lon));
+    }
   } = useSearchResults((query) => {
     query
       .getRequest()
-	  .setSearchFilter( new FilterGeo('location', defaultDistance.value, 51.5023187,-3.2874498) )
+	  .setSearchFilter( new FilterGeo('location', defaultDistance.value, defaultLocation.lat, defaultLocation.lon) )
       .setSearchQueryHighlightFragmentSize(500)
       .setSearchQueryHighlightFields(['subtitle', 'description'])
       .setSearchQueryHighlightPreTag(HIGHLIGHT_DATA.pre)
@@ -92,6 +97,7 @@ export const LocationSearchResults = ({
   const defaultCardView = CardViewSwitcher.CARD_VIEW_LIST;
   const [dir, setDir] = useState(defaultCardView);
   const [distance, setDistance] = useState(defaultDistance);
+  const [location, setLocation] = useState(defaultLocation);
   const onToggle = (value = defaultCardView) => setDir(value);
   const { sortChoices, currentOption } = useSortingOptions();
 
@@ -115,15 +121,15 @@ export const LocationSearchResults = ({
       {!isLoading && (
         <>
 		  <SearchPageTitle>{`Showing results for `}
-			<SelectStyled.Root defaultValue="Cardiff" onValueChange={onSortChange}>
+			<SelectStyled.Root defaultValue={defaultLocation} onValueChange={onLocationChange}>
 				<SelectStyled.Trigger>
-				  <SelectStyled.SelectValue>Cardiff</SelectStyled.SelectValue>
+				  <SelectStyled.SelectValue>{location.label}</SelectStyled.SelectValue>
 				  <SelectStyled.Icon />
 				</SelectStyled.Trigger>
 				<SelectStyled.Content>
 				  <SelectStyled.Viewport>
 					  {locations.map((option) => (
-					  <SelectStyled.Option value={option} key={`${option.value}`}>
+					  <SelectStyled.Option value={option} key={`${option.label}`}>
 						<SelectStyled.OptionText>{option.label}</SelectStyled.OptionText>
 					  </SelectStyled.Option>
 					  ))}
