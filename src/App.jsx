@@ -71,6 +71,7 @@ function App() {
                   <Route path="/" element={<Home />} />
                   <Route path="/search" element={<Search />} />
                   <Route path="/location-search" element={<LocationSearch />} />
+                  <Route path="/location search" element={<LocationSearch />} />
                   <Route path="/detail/:id" element={<ArticleDetail />}></Route>
 				  <Route path="/configuration" element={<Configuration />} />
 				  <Route path="/search api" element={<API />} />

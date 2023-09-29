@@ -1,6 +1,7 @@
 [{
   "mainTitle": "Search Experience",
-  "items": ["Search"]
+  "items": ["Search",
+  "Location Search"]
 },{
   "mainTitle": "Search Configuration",
   "items": ["Configuration",
