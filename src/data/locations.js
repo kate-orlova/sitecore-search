@@ -1,18 +1,22 @@
 export default [
   {
-    value: '52.4974437,-2.0284356',
+	lat: 52.4974437,
+	lon: -2.0284356,
     label: 'Birmingham',
   },
   {
-    value: '51.5023187,-3.2874498',
+	lat: 51.5023187,
+	lon: -3.2874498,
     label: 'Cardiff',
   },
   {
-    value: '51.5286416,-0.1015987',
+	lat: 51.5286416,
+	lon: -0.1015987,
     label: 'London',
   },
   {
-    value: '53.4723193,-2.3058626',
+    lat: 53.4723193,
+	lon: -2.3058626,
     label: 'Manchester',
   }
 ];
