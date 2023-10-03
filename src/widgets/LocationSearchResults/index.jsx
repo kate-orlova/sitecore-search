@@ -1,17 +1,16 @@
-import { useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { ArrowLeftIcon, ArrowRightIcon, CheckIcon, GridIcon, ListBulletIcon } from '@radix-ui/react-icons';
 import { Presence } from '@radix-ui/react-presence';
 import { FilterGeo, WidgetDataType, useSearchResults, useSearchResultsSelectedFacets, widget } from '@sitecore-search/react';
-import { AccordionFacets, CardViewSwitcher, Pagination } from '@sitecore-search/ui';
+import { AccordionFacets, CardViewSwitcher, Pagination, Select, SortSelect } from '@sitecore-search/ui';
 
 import styled from 'styled-components';
 import { theme } from '@sitecore-search/ui';
 
 import { LanguageContext } from '../../contexts/languageContext';
 import { DEFAULT_IMAGE, HIGHLIGHT_DATA } from '../../data/constants';
-import useSortingOptions from '../../hooks/useSortingOptions';
 import { HighlightComponent, getDescription } from '../utils';
 import distances from '../../data/distances.js';
 import locations from '../../data/locations.js';
@@ -63,11 +62,16 @@ export const LocationSearchResults = ({
       onFacetClick,
       onClearFilters
     },
-    state: { page, itemsPerPage },
+    state: { sortType, page, itemsPerPage },
     queryResult: {
       isLoading,
       isFetching,
-      data: {total_item: totalItems = 0, facet: facets = [], content: articles = [] } = {},
+      data: {
+        total_item: totalItems = 0, 
+        sort: { choices: sortChoices = [] } = {},
+        facet: facets = [], 
+        content: articles = [] 
+	  } = {},
     },
 	query: query,
 	onDistanceChange = (distanceOption) => {
@@ -96,16 +100,49 @@ export const LocationSearchResults = ({
       },
   });
   const totalPages = Math.ceil(totalItems / (itemsPerPage !== 0 ? itemsPerPage : 1));
+  const selectedSortIndex = sortChoices.findIndex((s) => s.name === sortType);
   const selectedFacetsFromApi = useSearchResultsSelectedFacets();
   const defaultCardView = CardViewSwitcher.CARD_VIEW_LIST;
   const [dir, setDir] = useState(defaultCardView);
   const [distance, setDistance] = useState(defaultDistance);
   const [location, setLocation] = useState(defaultLocation);
   const onToggle = (value = defaultCardView) => setDir(value);
-  const { sortChoices, currentOption } = useSortingOptions();
 
   return (
-    <>
+    <>	
+	  <SearchPageTitle>{`Showing results for `}
+		<SelectStyled.Root defaultValue={defaultLocation} onValueChange={onLocationChange}>
+			<SelectStyled.Trigger>
+			  <SelectStyled.SelectValue>{location.label}</SelectStyled.SelectValue>
+			  <SelectStyled.Icon />
+			</SelectStyled.Trigger>
+			<SelectStyled.Content>
+			  <SelectStyled.Viewport>
+				  {locations.map((option) => (
+				  <SelectStyled.Option value={option} key={`${option.label}`}>
+					<SelectStyled.OptionText>{option.label}</SelectStyled.OptionText>
+				  </SelectStyled.Option>
+				  ))}
+			  </SelectStyled.Viewport>
+			</SelectStyled.Content>
+		  </SelectStyled.Root>
+		  {` in `}
+		  <SelectStyled.Root defaultValue={defaultDistance} onValueChange={onDistanceChange}>
+			<SelectStyled.Trigger>
+			  <SelectStyled.SelectValue>{distance.label}</SelectStyled.SelectValue>
+			  <SelectStyled.Icon />
+			</SelectStyled.Trigger>
+			<SelectStyled.Content>
+			  <SelectStyled.Viewport>
+				{distances.map((option) => (
+				  <SelectStyled.Option value={option} key={`${option.value}`}>
+					<SelectStyled.OptionText>{option.label}</SelectStyled.OptionText>
+				  </SelectStyled.Option>
+				))}
+			  </SelectStyled.Viewport>
+			</SelectStyled.Content>
+		  </SelectStyled.Root>
+	  </SearchPageTitle>	
       {isLoading && (
         <LoaderContainer>
           <Presence present={isLoading}>
@@ -122,41 +159,8 @@ export const LocationSearchResults = ({
         </LoaderContainer>
       )}
       {!isLoading && (
-        <>
-		  <SearchPageTitle>{`Showing results for `}
-			<SelectStyled.Root defaultValue={defaultLocation} onValueChange={onLocationChange}>
-				<SelectStyled.Trigger>
-				  <SelectStyled.SelectValue>{location.label}</SelectStyled.SelectValue>
-				  <SelectStyled.Icon />
-				</SelectStyled.Trigger>
-				<SelectStyled.Content>
-				  <SelectStyled.Viewport>
-					  {locations.map((option) => (
-					  <SelectStyled.Option value={option} key={`${option.label}`}>
-						<SelectStyled.OptionText>{option.label}</SelectStyled.OptionText>
-					  </SelectStyled.Option>
-					  ))}
-				  </SelectStyled.Viewport>
-				</SelectStyled.Content>
-			  </SelectStyled.Root>
-			  {` in `}
-			  <SelectStyled.Root defaultValue={defaultDistance} onValueChange={onDistanceChange}>
-				<SelectStyled.Trigger>
-				  <SelectStyled.SelectValue>{distance.label}</SelectStyled.SelectValue>
-				  <SelectStyled.Icon />
-				</SelectStyled.Trigger>
-				<SelectStyled.Content>
-				  <SelectStyled.Viewport>
-					{distances.map((option) => (
-					  <SelectStyled.Option value={option} key={`${option.value}`}>
-						<SelectStyled.OptionText>{option.label}</SelectStyled.OptionText>
-					  </SelectStyled.Option>
-					))}
-				  </SelectStyled.Viewport>
-				</SelectStyled.Content>
-			  </SelectStyled.Root>
-		  </SearchPageTitle>
-          <SearchResultsLayout.MainArea ref={widgetRef}>
+        <SearchResultsLayout.MainArea ref={widgetRef}>		  
+          <SearchResultsLayout.MainArea>
             {isFetching && (
               <LoaderContainer>
                 <Presence present={true}>
@@ -171,7 +175,9 @@ export const LocationSearchResults = ({
                   </LoaderAnimation>
                 </Presence>
               </LoaderContainer>
-            )}
+            )}			
+			{totalItems > 0 && (
+			<>	
             <SearchResultsLayout.LeftArea>
               {selectedFacetsFromApi.length > 0 && (
                 <FiltersStyled.ClearFilters onClick={onClearFilters}>Clear Filters</FiltersStyled.ClearFilters>
@@ -179,7 +185,7 @@ export const LocationSearchResults = ({
               <FiltersStyled.SelectedFiltersList>
                 {selectedFacetsFromApi.map((selectedFacet) =>
                   selectedFacet.values.map((v) => (
-                    <FiltersStyled.SelectedFiltersListItem key={`${selectedFacet.id}@${v.id}@${language}`}>
+                    <FiltersStyled.SelectedFiltersListItem key={`${selectedFacet.id}@${v.id}`}>
                       <FiltersStyled.SelectedFiltersListItemText>
                         {selectedFacet.name}: {v.text}
                       </FiltersStyled.SelectedFiltersListItemText>
@@ -198,17 +204,14 @@ export const LocationSearchResults = ({
                 onFacetValueClick={onFacetClick}
               >
                 {facets.map((f) => (
-                  <AccordionFacetsStyled.Facet facetId={f.name} key={`${f.name}@${language}`}>
+                  <AccordionFacetsStyled.Facet facetId={f.name} key={f.name}>
                     <AccordionFacetsStyled.Header>
-                      <AccordionFacetsStyled.Trigger>
-                        <span>{f.label}</span>
-                        <AccordionFacetsStyled.Icon />
-                      </AccordionFacetsStyled.Trigger>
+                      <AccordionFacetsStyled.Trigger>{f.label}</AccordionFacetsStyled.Trigger>
                     </AccordionFacetsStyled.Header>
                     <AccordionFacets.Content>
                       <AccordionFacetsStyled.ValueList>
                         {f.value.map((v, index) => (
-                          <AccordionFacetsStyled.Item {...{ index, facetValueId: v.id }} key={`${v.id}@${language}`}>
+                          <AccordionFacetsStyled.Item {...{ index, facetValueId: v.id }} key={v.id}>
                             <AccordionFacetsStyled.ItemCheckbox>
                               <AccordionFacetsStyled.ItemCheckboxIndicator>
                                 <CheckIcon />
@@ -248,9 +251,11 @@ export const LocationSearchResults = ({
                   </CardViewSwitcherStyled.Root>
 
                   {/* Sort Select */}
-                  <SortSelectStyled.Root defaultValue={currentOption?.name} onValueChange={onSortChange}>
+                  <SortSelect.Root defaultValue={sortChoices[selectedSortIndex]?.name} onValueChange={onSortChange}>
                     <SortSelectStyled.Trigger>
-                      <SortSelectStyled.SelectValue>{currentOption?.label}</SortSelectStyled.SelectValue>
+                      <SortSelectStyled.SelectValue>
+					    {selectedSortIndex > -1 ? sortChoices[selectedSortIndex].label : ''}
+                      </SortSelectStyled.SelectValue>
                       <SortSelectStyled.Icon />
                     </SortSelectStyled.Trigger>
                     <SortSelectStyled.Content>
@@ -262,7 +267,7 @@ export const LocationSearchResults = ({
                         ))}
                       </SortSelectStyled.Viewport>
                     </SortSelectStyled.Content>
-                  </SortSelectStyled.Root>
+                  </SortSelect.Root>
                 </SearchResultsLayout.Toolbar>
               </SearchResultsLayout.RightTopArea>
 
@@ -338,7 +343,7 @@ export const LocationSearchResults = ({
               <PageControlsStyled>
                 <div>
                   <label>Results Per Page</label>
-                  <SelectStyled.Root
+                  <Select.Root
                     defaultValue={String(defaultItemsPerPage)}
                     onValueChange={(v) => onResultsPerPageChange({ numItems: Number(v) })}
                   >
@@ -361,7 +366,7 @@ export const LocationSearchResults = ({
                         </SelectStyled.Option>
                       </SelectStyled.Viewport>
                     </SelectStyled.Content>
-                  </SelectStyled.Root>
+                  </Select.Root>
                 </div>
                 <PaginationStyled.Root
                   currentPage={page}
@@ -396,8 +401,10 @@ export const LocationSearchResults = ({
                 </PaginationStyled.Root>
               </PageControlsStyled>
             </SearchResultsLayout.RightArea>
+			</>
+			)}
           </SearchResultsLayout.MainArea>
-        </>
+        </SearchResultsLayout.MainArea>
       )}
     </>
   );
