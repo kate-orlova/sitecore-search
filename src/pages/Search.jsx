@@ -28,7 +28,7 @@ const Search = () => {
     <SearchPageSection>
       <div>
         <SearchPageTitle>{`Showing results for "${query}"`}</SearchPageTitle>
-        <SearchResults key={`${query}-search`} rfkId="rfkid_7"  />
+        <SearchResults key={`${query}-search`} rfkId="rfkid_7" defaultKeyphrase={query} />
       </div>
     </SearchPageSection>
   );

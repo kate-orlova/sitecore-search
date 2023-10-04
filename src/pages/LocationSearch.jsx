@@ -20,7 +20,7 @@ const LocationSearch = () => {
   return (
     <LocationSearchPageSection>
       <div>        
-        <LocationSearchResults key={`${query}-search`} rfkId="location_search"  />
+        <LocationSearchResults key={`${query}-search`} rfkId="location_search"  defaultKeyphrase={query} />
       </div>
     </LocationSearchPageSection>
   );
