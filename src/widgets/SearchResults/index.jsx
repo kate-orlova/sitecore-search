@@ -100,8 +100,8 @@ export const SearchResultsWithLayoutOptionComponent = ({
         </LoaderContainer>
       )}
       {!isLoading && (
-        <SearchResultsLayout.MainArea ref={widgetRef}>
-          <SearchResultsLayout.MainArea>
+        <>
+          <SearchResultsLayout.MainArea ref={widgetRef}>
             {isFetching && (
               <LoaderContainer>
                 <Presence present={true}>
@@ -345,7 +345,7 @@ export const SearchResultsWithLayoutOptionComponent = ({
               </>
             )}
           </SearchResultsLayout.MainArea>
-        </SearchResultsLayout.MainArea>
+        </>
       )}
     </>
   );
