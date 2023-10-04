@@ -159,8 +159,8 @@ export const LocationSearchResults = ({
         </LoaderContainer>
       )}
       {!isLoading && (
-        <SearchResultsLayout.MainArea ref={widgetRef}>		  
-          <SearchResultsLayout.MainArea>
+        <>		  
+          <SearchResultsLayout.MainArea ref={widgetRef}>
             {isFetching && (
               <LoaderContainer>
                 <Presence present={true}>
@@ -404,7 +404,7 @@ export const LocationSearchResults = ({
 			</>
 			)}
           </SearchResultsLayout.MainArea>
-        </SearchResultsLayout.MainArea>
+        </>
       )}
     </>
   );
