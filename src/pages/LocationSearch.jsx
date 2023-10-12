@@ -16,11 +16,12 @@ const LocationSearchPageSection = styled(PageSection)`
 const LocationSearch = () => {
   const [searchParams] = useSearchParams();
   const query = searchParams.get('q') || '';
+  const widgetId = searchParams.get('widget') || 'location_search';
 
   return (
     <LocationSearchPageSection>
       <div>        
-        <LocationSearchResults key={`${query}-search`} rfkId="location_search"  defaultKeyphrase={query} />
+        <LocationSearchResults key={`${query}-search`} rfkId={widgetId}  defaultKeyphrase={query} />
       </div>
     </LocationSearchPageSection>
   );
