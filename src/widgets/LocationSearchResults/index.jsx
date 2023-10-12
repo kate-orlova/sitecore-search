@@ -299,7 +299,7 @@ export const LocationSearchResults = ({
                           postSeparator={HIGHLIGHT_DATA.post}
                           highlightElement={HIGHLIGHT_DATA.highlightTag}
                         />
-						<p>{a.from_price ? '£' + a.from_price : 'Coming Soon'}</p>
+						<p>{a.from_price ? '£' + a.from_price : ''}</p>
                       </ArticleCardStyled.Subtitle>					  
                       <ArticleCardStyled.Type>{a.location ? a.location : 'Unknown'}</ArticleCardStyled.Type>
                     </ArticleCardStyled.Root>
@@ -332,7 +332,7 @@ export const LocationSearchResults = ({
                             postSeparator={HIGHLIGHT_DATA.post}
                             highlightElement={HIGHLIGHT_DATA.highlightTag}
                           />
-						  <p>{a.from_price ? '£' + a.from_price : 'Coming Soon'}</p>
+						  <p>{a.from_price ? '£' + a.from_price : ''}</p>
                         </ArticleCardRowStyled.Content>
                         <ArticleCardRowStyled.Type>{a.location ? a.location : 'Unknown'}</ArticleCardRowStyled.Type>
                       </ArticleCardRowStyled.Right>
