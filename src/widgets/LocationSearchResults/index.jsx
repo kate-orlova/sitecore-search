@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { ArrowLeftIcon, ArrowRightIcon, CheckIcon, GridIcon, ListBulletIcon } from '@radix-ui/react-icons';
 import { Presence } from '@radix-ui/react-presence';
@@ -46,8 +46,8 @@ export const LocationSearchResults = ({
   defaultPage = 1,
   defaultKeyphrase = '',
   defaultItemsPerPage = 24,
-  defaultDistance = { value: '10mi', label: '10 miles' },
-  defaultLocation = { lat: 51.5023187, lon: -3.2874498, label: 'Cardiff' }
+  defaultDistance = distances.find((d) => {let [searchParams] = useSearchParams(); return d.value === (searchParams.get('distance') || '10mi')}),
+  defaultLocation = locations.find((l) => {let [searchParams] = useSearchParams(); return l.label === (searchParams.get('location') || 'Cardiff')})
 }) => {
   const { language } = useContext(LanguageContext);
   const navigate = useNavigate();
