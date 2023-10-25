@@ -52,7 +52,7 @@ More complex scenario with localised content and/or advanced authentication can 
 
 <br/>
 <h3>No code data pull to the Sitecore Search</h3>
-<p>TBC</p>
+<p>The easiest way to bring all your content pages to the Sitecore Search at once with zero coding efforts is to create a Web Crawler linked to your Sitemap.xml. The Web Crawler will process each link in your Sitemap.xml one by one and create a corresponding content item in line with your pre-defined attributes and mapping rules.</p>
 
 </ConfigPageSection>
   );
