@@ -54,6 +54,13 @@ More complex scenario with localised content and/or advanced authentication can 
 <h3>No code data pull to the Sitecore Search</h3>
 <p>The easiest way to bring all your content pages to the Sitecore Search at once with zero coding efforts is to create a Web Crawler linked to your Sitemap.xml. The Web Crawler will process each link in your Sitemap.xml one by one and create a corresponding content item in line with your pre-defined attributes and mapping rules.</p>
 
+
+<br/>
+<h3>How to crawl and index a Source</h3>
+<p>After you published your source, everything is ready for the first content scan. Ideally, you should manually run your Crawler to index your content for the first time just to ensure that everything is configured correctly and operates without any errors. On completion of the crawler job, you can browse your content items in the Content Collection section within CEC.</p>
+<p>For subsequent scans and indexations, in addition to the on-demand actions it will be beneficial to set up a schedule to automatically keep your indices up-to-date with the original content sources. See the Scan Frequency section for your Crawler.</p>
+
+
 </ConfigPageSection>
   );
 };
