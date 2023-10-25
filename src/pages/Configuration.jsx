@@ -36,8 +36,22 @@ const Configuration = () => {
 </ul>
 <p>Then click on the <strong>Save</strong> button, if there are no errors, the Sitecore Search creates a new source.</p>
 
-
+<br/>
 <h3>How to push your custom data to the Sitecore Search over API?</h3>
+<p>If you already have an API endpoint allowing to retrieve the desired data for the search scope in the JSON format then your connector choice should be the API Crawler.</p>
+<p>For a simple use case you only have to configure two things:</p>
+<ul>
+<li>Your API endpoint URL should be specified under Triggers -> URL;</li>
+<li>Document Extractor to tell the Sitecore Search how you want it to read the API response and map it to the individual attributes.</li>
+</ul>
+
+<p>
+Note, that the url, type and id are mandatory attributes.<br/>
+More complex scenario with localised content and/or advanced authentication can also be supported by API Crawlers.
+</p>
+
+<br/>
+<h3>No code data pull to the Sitecore Search</h3>
 <p>TBC</p>
 
 </ConfigPageSection>
