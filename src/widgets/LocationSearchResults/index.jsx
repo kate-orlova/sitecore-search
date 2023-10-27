@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { ArrowLeftIcon, ArrowRightIcon, CheckIcon, GridIcon, ListBulletIcon } from '@radix-ui/react-icons';
 import { Presence } from '@radix-ui/react-presence';
-import { FilterGeo, WidgetDataType, useSearchResults, useSearchResultsSelectedFacets, widget } from '@sitecore-search/react';
+import { PageController, FilterGeo, WidgetDataType, useSearchResults, useSearchResultsSelectedFacets, widget } from '@sitecore-search/react';
 import { AccordionFacets, CardViewSwitcher, Pagination, Select, SortSelect } from '@sitecore-search/ui';
 
 import styled from 'styled-components';
@@ -107,6 +107,9 @@ export const LocationSearchResults = ({
   const [distance, setDistance] = useState(defaultDistance);
   const [location, setLocation] = useState(defaultLocation);
   const onToggle = (value = defaultCardView) => setDir(value);
+  
+  PageController.getContext().setGeoLocationLat(defaultLocation.lat);
+  PageController.getContext().setGeoLocationLon(defaultLocation.lon);
 
   return (
     <>	
