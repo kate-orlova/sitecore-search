@@ -108,8 +108,8 @@ export const LocationSearchResults = ({
   const [location, setLocation] = useState(defaultLocation);
   const onToggle = (value = defaultCardView) => setDir(value);
   
-  PageController.getContext().setGeoLocationLat(defaultLocation.lat);
-  PageController.getContext().setGeoLocationLon(defaultLocation.lon);
+  PageController.getContext().setGeoLocationLat(location.lat);
+  PageController.getContext().setGeoLocationLon(location.lon);
 
   return (
     <>	
