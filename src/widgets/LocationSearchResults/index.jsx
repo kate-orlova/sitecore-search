@@ -42,7 +42,7 @@ const SearchPageTitle = styled.div`
 `;
 
 export const LocationSearchResults = ({
-  defaultSortType = 'featured_desc',
+  defaultSortType = 'distance_asc',
   defaultPage = 1,
   defaultKeyphrase = '',
   defaultItemsPerPage = 24,
