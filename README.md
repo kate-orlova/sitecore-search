@@ -6,6 +6,8 @@
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/y/kate-orlova/sitecore-search)
 
 # Sitecore Search
+The Sitecore Search project aims to support your federated search strategy and accelerate integration with the Sitecore Search product utilising its built-in functionality and widgets.
+
 This demo project is powered by [Sitecore Search](https://doc.sitecore.com/search) and uses the [Sitecore Search Starter Kit](https://github.com/Sitecore/Sitecore-Search-JS-SDK-Starter-Kit).
 
 # Contribution
