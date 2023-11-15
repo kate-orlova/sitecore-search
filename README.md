@@ -10,6 +10,14 @@ The Sitecore Search project aims to support your federated search strategy and a
 
 This demo project is powered by [Sitecore Search](https://doc.sitecore.com/search) and uses the [Sitecore Search Starter Kit](https://github.com/Sitecore/Sitecore-Search-JS-SDK-Starter-Kit).
 
+# Functionality
+This project features the following widgets that can be easily incorporated into your website:
+1. **Preview Search** to present the predictive search results;
+2. **Search Results** to deliver the found items matching your search criteria and filtering options;
+3. **Location Search Results** to support the geographical search that is implemented as a geospatial search by radius and coordinates;
+4. **Article Detail** to preview all details of one search item.
+
+
 # Contribution
 Hope you found this project useful, your contributions and suggestions will be very much appreciated. Please submit a pull request.
 
