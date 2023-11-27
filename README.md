@@ -1,4 +1,6 @@
-[![GitHub license](https://img.shields.io/github/license/kate-orlova/taxonomy-in-sitecore.svg)](https://github.com/kate-orlova/sitecore-search/blob/master/LICENSE)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/kate-orlova/sitecore-search)
+[![GitHub release](https://img.shields.io/github/release-date/kate-orlova/sitecore-search.svg?style=flat)](https://github.com/kate-orlova/sitecore-search/releases/tag/v1.0)
+[![GitHub license](https://img.shields.io/github/license/kate-orlova/sitecore-search.svg)](https://github.com/kate-orlova/sitecore-search/blob/master/LICENSE)
 ![GitHub language count](https://img.shields.io/github/languages/count/kate-orlova/sitecore-search.svg?style=flat)
 ![GitHub top language](https://img.shields.io/github/languages/top/kate-orlova/sitecore-search.svg?style=flat)
 ![GitHub repo size](https://img.shields.io/github/repo-size/kate-orlova/sitecore-search.svg?style=flat)
