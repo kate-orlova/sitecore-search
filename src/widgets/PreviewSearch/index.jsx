@@ -173,7 +173,7 @@ export const PreviewSearchComponent = ({ defaultProductsPerPage = 6 }) => {
         .setSearchQueryHighlightPostTag(HIGHLIGHT_DATA.post);
     },
     state: {
-      suggestionsList: [{ suggestion: 'title_context_aware', max: 10 }],
+      suggestionsList: [{ suggestion: 'title_context_aware', max: 10, keyphrase_fallback: true}],
         itemsPerPage: defaultProductsPerPage,
         keyphrase: '',
     },
