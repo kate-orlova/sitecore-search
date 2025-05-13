@@ -19,6 +19,7 @@ This project features the following widgets that can be easily incorporated into
 3. **Location Search Results** to support the geographical search that is implemented as a geospatial search by radius and coordinates;
 4. **Article Detail** to preview all details of one search item.
 
+Note, the `suggestion.keyphrase_fallback` property is set to `true` to use the first suggestion from the first suggestion block as an alternative keyword in case the search finds zero results.
 
 # Contribution
 Hope you found this project useful, your contributions and suggestions will be very much appreciated. Please submit a pull request.
